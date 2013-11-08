@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<title>hey</title>
+		
+		<link href="./minicolor/jquery.minicolors.css" rel="stylesheet">
+		
+		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+		<script src="http://ricostacruz.com/jquery.transit/jquery.transit.min.js"></script>
+		<script src="dragdrop/jquery.event.drag.js"></script>
+		<script src="minicolor/jquery.minicolors.min.js"></script>
+		
+		<script src="radass.js"></script>
+		
+		<script>
+			$(document).ready(function(){
+				$("#mygrad").on("change",function(e,obj,css){
+					$("body").css(css);
+				}).radass({
+					angle:108,
+					color:[
+						"rgba(168,125,168,0.6) 0%",
+						"rgba(0,60,255,0.5) 36%",
+						"rgba(39,230,141,0.6) 65%",
+						"rgba(207,204,128,1) 100%"
+					]
+				});
+			});
+		</script>
+		<style>
+			html, body {
+				height: 100%;
+				margin: 0;
+				padding:0;
+			}
+			
+			body {
+				background-repeat: no-repeat;
+				background-attachment: fixed;
+			}
+			
+			#mygrad {
+				position:absolute;
+				top:45%;
+				left:45%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="mygrad">
+			hey
+		</div>
+	</body>
+</html>
