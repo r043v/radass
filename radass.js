@@ -42,10 +42,12 @@
 	
 	var $delPoint = $("<div/>").css({
 		position:"absolute",
-		left:0,top:0,
-		backgroundImage:"url(data:image/gif;base64,R0lGODlhEAAQAKEBAICAgP///////////yH5BAEKAAIALAAAAAAQABAAAAIylC+gyAfejJp0uYCzDk/W30mbFooAdnIcc6buirToXCbq3bI4rb9qLdsBR5laAmSMNAoAOw==)"
-	}).width(16).height(16).hide().on("click",function(e){
-		$bar.trigger("del");
+		left:-20,top:0,
+		backgroundImage:"url(data:image/gif;base64,R0lGODlhEAAQAKEBAICAgP///////////yH5BAEKAAIALAAAAAAQABAAAAIylC+gyAfejJp0uYCzDk/W30mbFooAdnIcc6buirToXCbq3bI4rb9qLdsBR5laAmSMNAoAOw==)",
+		cursor:"pointer"
+	}).width(16).height(16).on("click",function(e){
+		//alert("ftw");
+		colorpickerShowed.trigger("del");
 		e.stopPropagation();
 	});
 	
@@ -65,12 +67,12 @@
 	
 	var useOpacity = true;
 	
-	$("body").on("click",function(){
+/*	$("body").on("click",function(){
 		//console.log("click",colorpickerShowed);
 		if(colorpickerShowed !== false)
 			colorpickerShowed.trigger("del");
 	});
-	
+*/	
 	var $input = $("<input/>",{type:"hidden",value:"#ff00ff"}).css({position:"absolute",bottom:0,left:0}).appendTo($g);
 	$input.minicolors({
 		inline:true,
@@ -85,7 +87,7 @@
 	
 	//var $swatch = $input.next('.minicolors-swatch').hide();
 	
-	var $colorpicker = $input.next('.minicolors-panel').css({position:"absolute",zIndex:9999}).hide();
+	var $colorpicker = $input.next('.minicolors-panel').css({position:"absolute",zIndex:9999}).append($delPoint).hide();
 	
 	var c = { lastbg:"dumb solid color" };
 	
@@ -168,7 +170,7 @@
 		$bar.trigger("set",[c.color]);
 		$prev.trigger("refresh");
 	}).on("set",function(e,colors){
-		console.log( colors );
+		//console.log( colors );
 		$addPoint.detach();
 		$bar.empty();
 		$addPoint.appendTo( $bar );
@@ -316,14 +318,23 @@
 				
 				//$prev.trigger("refresh");
 			}).on("del",function(){
-				console.log("del")
-				if(c.points.length < 2) return;
-				var i = points.indexOf(point);
-				console.log(i);
+				//console.log("del")
+				if(c.points.length < 3) return;
+				var i = c.points.indexOf(point);
+				//console.log(i);
 				if(i !== -1){
-					points.splice(i,1);
-					//$prev.trigger("sort");
-					$bar.trigger("set",[c.color]);
+					c.points[i].$.remove();
+					colorpickerShowed = false;
+					
+				//	console.log(c.points);
+					c.points.splice(i,1);
+				//	console.log(c.points);
+					//
+					
+					$colorpicker.hide();
+					
+					//$bar.trigger("set",[c.color]);
+					$prev.trigger("sort");
 					$prev.trigger("refresh");
 				}
 			}).appendTo($bar);
@@ -458,9 +469,9 @@
 				c.$t = $t;
 				$bar.trigger("set",[c.color]);
 				$angle.trigger("set",[c.angle]).show();
-				console.log( c.pos );
+			//	console.log( c.pos );
 				$g.detach().hide().appendTo($t.parent().css({textAlign:"center"})).show().offset(c.pos); //"body")
-			console.log("ready!");
+			//console.log("ready!");
 			}).on('set',function(e,grd){
 				c.angle = grd.angle;
 				c.color = grd.color;
@@ -474,9 +485,9 @@
 					type : c.type
 				};
 			}).on("refresh",function(){
-				console.log("prev refresh");
+				//console.log("prev refresh");
 				$prev.trigger("refresh");
-				console.log("ftw");
+				//console.log("ftw");
 			}).on("gradhide",function(){
 				$g.detach();
 			}).on("gradshow",function(){
